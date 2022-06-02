@@ -1,40 +1,20 @@
-import React from 'react';
-import { URL } from 'state/constans/constans';
-import axios from 'axios'
-import moment from 'moment';
-import { WorklogForIssueDto } from 'interfaces&Types/issueReturnIfaces/issuesReturnRoot';
-import WeekCalendar from 'components/organisms/WeekCalendar'
-import { useActions } from 'hooks/useActions';
-import { useTypedSelector } from 'hooks/useTypedSelector';
-
+import React from "react";
+import moment from "moment";
+import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/issuesReturnRoot";
+import WeekCalendar from "components/organisms/WeekCalendar";
+import { WorklogDateRange } from "endpoint/endpointExecuter";
+import { v4 as uuidv4 } from 'uuid';
 
 const Calendar: React.FC<any> = (props) => {
-
   const [worklogs, setWorklogs] = React.useState<WorklogForIssueDto[]>([]);
-  const startDate = moment().startOf('isoWeek')
-  const endDate = moment().endOf('isoWeek')
- 
+  const startDate = moment().startOf("isoWeek");
+  const endDate = moment().endOf("isoWeek");
+
   React.useEffect(() => {
-    axios
-      .post<moment.Moment, { data: WorklogForIssueDto[]}>(
-        `${URL}/Issues/DateRangeWorklogs`, {
-          dateFrom: startDate,
-          dateTo: endDate,
-        }, { 
-          withCredentials: true,
-        }
-      )
-      .then((data) => {
-        setWorklogs(data.data as WorklogForIssueDto[]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    WorklogDateRange(startDate, endDate).then(data => setWorklogs(data))
   }, []);
 
-  return (
-    <WeekCalendar worklogs={worklogs} startDate={startDate} />
-  );
+  return <WeekCalendar key={uuidv4()} worklogs={worklogs} startDate={startDate} />;
 };
 
 export default Calendar;
