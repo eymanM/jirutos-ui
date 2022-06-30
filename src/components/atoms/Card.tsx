@@ -2,10 +2,10 @@ import React from "react";
 import { Card, CardActionArea, Typography, Tooltip } from "@mui/material";
 import ContentMui from "@mui/material/CardContent";
 import WorklogModalContent from "components/organisms/WorklogModal.styled";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/issuesReturnRoot";
+import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
 
 type CardProps = {
-  worklog: WorklogForIssueDto
+  worklog: WorklogForIssueDto;
 };
 
 const CardContent: React.FC<CardProps> = ({ worklog }) => {
@@ -32,11 +32,7 @@ const CardContent: React.FC<CardProps> = ({ worklog }) => {
           </ContentMui>
         </CardActionArea>
       </Card>
-      <WorklogModalContent
-        open={modalOpen}
-        handleClose={() => setModalOpen(false)}
-        worklog={worklog}
-      />
+      <WorklogModalContent open={modalOpen} handleClose={() => setModalOpen(false)} worklog={worklog} />
     </>
   );
 };

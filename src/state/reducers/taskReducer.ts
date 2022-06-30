@@ -5,30 +5,30 @@ import { Action } from "state/actions";
 import { IssueTaskTime } from "state/IssueTaskTime";
 
 interface TaskState {
-  loading: boolean
-  error: string | null
-  order: string[]
-  openModalWorklog: boolean
+  loading: boolean;
+  error: string | null;
+  order: string[];
+  rerenderCalendar: boolean;
   data: {
-    [key: string]: IssueTaskTime
-  }
+    [key: string]: IssueTaskTime;
+  };
 }
 
 const initialState: TaskState = {
   loading: false,
   error: null,
   order: [],
-  openModalWorklog: false,
-  data: {}
-}
+  rerenderCalendar: false,
+  data: {},
+};
 
 const reducer = (state: TaskState = initialState, action: Action): TaskState => {
   switch (action.type) {
     case ActionType.SHOW_MODAL_WORKLOG:
-      return { loading: false, error: null, order: [], openModalWorklog: action.payload.show, data: {} }
+      return { loading: false, error: null, order: [], rerenderCalendar: action.payload.show, data: {} };
     default:
-      return state   
+      return state;
   }
-}
+};
 
 export default reducer;
