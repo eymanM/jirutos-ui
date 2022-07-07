@@ -73,4 +73,5 @@ export interface WorklogForIssueDto {
   timeSpent: string;
   type: string;
   integrationName: string;
+  customField1?: string;
 }

@@ -1,40 +1,33 @@
-import * as React from 'react';
-import { Box, Toolbar, Container, Paper, Grid } from '@mui/material';
-import AppBar from 'components/organisms/AppBar';
-import Drawer from 'components/organisms/Drawer';
-import { Outlet } from 'react-router-dom';
+import * as React from "react";
+import { Box, Toolbar, Container, Paper, Grid } from "@mui/material";
+import AppBar from "components/organisms/AppBar";
+import Drawer from "components/organisms/Drawer";
+import { Outlet } from "react-router-dom";
 
 const DashboardContent: React.FC<any> = (props) => {
   const [open, setOpen] = React.useState<boolean>(true);
 
   const toggleDrawer = () => {
-    setOpen(!open);
+    setOpen((prev) => !prev);
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <AppBar open={open} toggleDrawer={toggleDrawer} />
       <Drawer open={open} toggleDrawer={toggleDrawer} />
       <Box
-        component='main'
+        component="main"
         sx={{
           backgroundColor: (theme) => theme.palette.grey[100],
           flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto',
-        }}>
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
         <Toolbar />
-        <Container maxWidth='xl' sx={{ marginTop: 1} }>
+        <Container maxWidth="xl" sx={{ marginTop: 1 }}>
           <Grid item>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 'auto',
-              }}>
-              <Outlet />
-            </Paper>
+            <Outlet />
           </Grid>
         </Container>
       </Box>

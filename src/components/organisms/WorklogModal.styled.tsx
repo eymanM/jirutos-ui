@@ -6,7 +6,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { UpdateWorklogModel } from "interfaces&Types/UpdateWorklogModel";
-import { UpdateWorklog } from "endpoint/endpointExecuter";
+import { UpdateWorklog } from "endpoint/endpointWorklogExecuter";
 import moment from "moment";
 import { useActions } from "hooks/useActions";
 import { useTypedSelector } from "hooks/useTypedSelector";
@@ -30,7 +30,8 @@ const WorklogModalContent: React.FC<WorklogContentProps> = ({ open, handleClose,
       id: worklog.id,
       issueId: worklog.issueId,
       timeSpent: worklog.timeSpent,
-      started: moment(worklog.startedDT).format("yyyy-MM-DDTHH:mm:ss.SSSZZ"),
+      started: worklog.startedDT,
+      customField1: worklog.customField1,
     };
   };
 

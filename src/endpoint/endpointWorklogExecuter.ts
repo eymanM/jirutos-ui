@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
 import { UpdateWorklogModel } from "interfaces&Types/UpdateWorklogModel";
+import { IssueForFilterModel } from "interfaces&Types/IssueForFilterModel";
 
 export const WorklogDateRange = async (startDate: moment.Moment, endDate: moment.Moment): Promise<WorklogForIssueDto[]> => {
   try {
@@ -22,5 +23,17 @@ export const UpdateWorklog = async (typeAndName: string, model: UpdateWorklogMod
     await axios.post<UpdateWorklogModel>(`${URL}/Issues/UpdateWorklog/${typeAndName}`, { ...model });
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const FilterIssuesByJql = async (typeAndName: string, jql: string): Promise<IssueForFilterModel[]> => {
+  try {
+    const data = await axios.get<string, { data: IssueForFilterModel[] }>(
+      `${URL}/Issues/FilterIssuesByJql/${typeAndName}/?jqlQuery=${jql}`
+    );
+    return data.data;
+  } catch (err) {
+    console.log(err);
+    return [];
   }
 };
