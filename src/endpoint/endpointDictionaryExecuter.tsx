@@ -1,9 +1,9 @@
-import { URL } from "state/constans/constans";
-import axios from "axios";
-import { ProjectModel } from "interfaces&Types/ProjectModel";
-import { StatusModel } from "interfaces&Types/StatusModel";
+import { URL } from 'state/constans/constans';
+import axios from 'axios';
+import { ProjectModel } from 'interfaces&Types/ProjectModel';
+import { StatusModel } from 'interfaces&Types/StatusModel';
 
-export const GetProjectsForUser = async (typeAndName: string = "Jira/psw-inzynierka"): Promise<ProjectModel[]> => {
+export const GetProjectsForUser = async (typeAndName: string): Promise<ProjectModel[]> => {
   try {
     const data = await axios.get<ProjectModel[]>(`${URL}/Dictionary/AvailableProjectsForUser/${typeAndName}`);
 
@@ -14,7 +14,7 @@ export const GetProjectsForUser = async (typeAndName: string = "Jira/psw-inzynie
   }
 };
 
-export const GetStatusesForProjects = async (typeAndName: string = "Jira/psw-inzynierka"): Promise<StatusModel[]> => {
+export const GetStatusesForProjects = async (typeAndName: string): Promise<StatusModel[]> => {
   try {
     const data = await axios.get<StatusModel[]>(`${URL}/Dictionary/Statuses/${typeAndName}`);
 

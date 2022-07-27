@@ -1,9 +1,11 @@
-import { URL } from "state/constans/constans";
-import axios from "axios";
-import moment from "moment";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
-import { UpdateWorklogModel } from "interfaces&Types/UpdateWorklogModel";
-import { IssueForFilterModel } from "interfaces&Types/IssueForFilterModel";
+import axios from 'axios';
+import { IssueForFilterModel } from 'interfaces&Types/IssueForFilterModel';
+import { FilterDataModel } from 'interfaces&Types/issueReturnIfaces/FilterData';
+import { WorklogForIssueDto } from 'interfaces&Types/issueReturnIfaces/IsuesReturnRoot';
+import { TypeName } from 'interfaces&Types/SimpleTypes';
+import { UpdateWorklogModel } from 'interfaces&Types/UpdateWorklogModel';
+import moment from 'moment';
+import { URL } from 'state/constans/constans';
 
 export const WorklogDateRange = async (startDate: moment.Moment, endDate: moment.Moment): Promise<WorklogForIssueDto[]> => {
   try {
@@ -26,11 +28,19 @@ export const UpdateWorklog = async (typeAndName: string, model: UpdateWorklogMod
   }
 };
 
-export const FilterIssuesByJql = async (typeAndName: string, jql: string): Promise<IssueForFilterModel[]> => {
+export const FilterIssues = async (typeAndName: string, filterData: FilterDataModel): Promise<IssueForFilterModel[]> => {
   try {
-    const data = await axios.get<string, { data: IssueForFilterModel[] }>(
-      `${URL}/Issues/FilterIssuesByJql/${typeAndName}/?jqlQuery=${jql}`
-    );
+    const data = await axios.post(`${URL}/Issues/FilterIssues/${typeAndName}`, { ...filterData });
+    return data.data;
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};
+
+export const UserIntegrations = async (email: string): Promise<TypeName[]> => {
+  try {
+    const data = await axios.get<string, { data: TypeName[] }>(`${URL}/User/Integrations/${email}`);
     return data.data;
   } catch (err) {
     console.log(err);

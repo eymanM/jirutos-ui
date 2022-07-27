@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardActionArea, Typography, Tooltip } from "@mui/material";
 import ContentMui from "@mui/material/CardContent";
 import WorklogModalContent from "components/organisms/WorklogModal.styled";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
+import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IsuesReturnRoot";
 
 type CardProps = {
   worklog: WorklogForIssueDto;

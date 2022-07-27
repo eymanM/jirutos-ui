@@ -2,8 +2,8 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/styles";
 import Card from "components/atoms/Card";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
 import { v4 as uuidv4 } from "uuid";
+import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IsuesReturnRoot";
 const StyledStack = styled(Stack)({
   border: 0,
 });

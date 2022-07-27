@@ -4,7 +4,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ButtonIcon from "components/atoms/ButtonIcon";
 import { WeekDays } from "state/constans/constans";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
+import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IsuesReturnRoot";
 import Stack from "components/molecules/Stack.styled";
 import moment from "moment";
 import { v4 as uiudv4 } from "uuid";

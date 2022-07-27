@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
+import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IsuesReturnRoot";
 import WeekCalendar from "components/organisms/WeekCalendar";
 import { WorklogDateRange } from "endpoint/endpointWorklogExecuter";
 import { v4 as uuidv4 } from "uuid";

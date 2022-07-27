@@ -1,63 +1,125 @@
-import React from "react";
-import StatusExpandForFilter from "components/molecules/StatusExpandForFilter";
-import ProjectExpandForFilter from "components/molecules/ProjectExpandForFilter";
-import { Card, CardActionArea, Grid, CardContent, Tooltip, Typography, Box } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material';
+import ProjectExpandForFilter from 'components/molecules/ProjectExpandForFilter';
+import StatusExpandForFilter from 'components/molecules/StatusExpandForFilter';
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import { FilterIssuesByJql } from "endpoint/endpointWorklogExecuter";
-import { IssueForFilterModel } from "interfaces&Types/IssueForFilterModel";
-import { JiraURL } from "state/constans/constans";
-import OtherExpandForFilter from "components/molecules/OtherExpandForFilter";
+import OtherExpandForFilter from 'components/molecules/OtherExpandForFilter';
+import { FilterIssues, UserIntegrations } from 'endpoint/endpointWorklogExecuter';
+import { IssueForFilterModel } from 'interfaces&Types/IssueForFilterModel';
+import { FilterDataModel } from 'interfaces&Types/issueReturnIfaces/FilterData';
+import { TypeName } from 'interfaces&Types/SimpleTypes';
+import { ClickUpUrl, JiraURL } from 'state/constans/constans';
 
 const FilterView = () => {
   const [checkedProjects, setCheckedProjects] = React.useState<string[]>([]);
   const [checkedStatuses, setCheckedStatuses] = React.useState<string[]>([]);
   const [checkedOthers, setCheckedOthers] = React.useState<string[]>([]);
   const [filteredIssues, setFilteredIssues] = React.useState<IssueForFilterModel[]>([]);
-  const projects = checkedProjects[0] ? `project in (${checkedProjects.join(",")})` : "";
-  const statuses = checkedStatuses[0] ? `status in (${checkedStatuses.join(",")})` : "";
-  const filters: string[] = [];
-
-  if (projects) filters.push(projects);
-  if (statuses) filters.push(statuses);
-  if (checkedOthers[0]) filters.push(checkedOthers.join(" AND "));
-
-  const jql = filters.join(" AND ");
+  const [integrations, setIntegrations] = React.useState<TypeName[]>([]);
+  const [integrationValue, setIntegrationValue] = React.useState<string>();
 
   React.useEffect(() => {
     async function fetch() {
-      const res = await FilterIssuesByJql("Jira/psw-inzynierka", jql);
+      const res = await UserIntegrations('ironoth12@gmail.com');
+      setIntegrations(res);
+      let value = `${res[0].type}/${res[0].name}`;
+      setIntegrationValue(value);
+    }
+    fetch();
+  }, []);
+
+  React.useEffect(() => {
+    setFilteredIssues([]);
+  }, [integrationValue]);
+
+  React.useEffect(() => {
+    async function fetch() {
+      if (!integrationValue) return;
+      if ([checkedProjects, checkedStatuses, checkedOthers].every((e) => e?.length === 0)) return;
+
+      const filterData: FilterDataModel = {
+        projects: checkedProjects,
+        statuses: checkedStatuses,
+        others: checkedOthers,
+      };
+      const res = await FilterIssues(integrationValue, filterData);
       setFilteredIssues(res);
     }
     fetch();
-  }, [jql]);
+  }, [checkedProjects, checkedStatuses, checkedOthers]);
 
   return (
-    <Grid container spacing={5}>
-      <Grid item xs={3}>
-        <ProjectExpandForFilter checkedProjects={checkedProjects} setCheckedProjects={setCheckedProjects} />
-        <StatusExpandForFilter checkedStatuses={checkedStatuses} setCheckedStatuses={setCheckedStatuses} />
-        <OtherExpandForFilter checkedOthers={checkedOthers} setCheckedOther={setCheckedOthers} />
-      </Grid>
-      <Grid item xs={9}>
-        {filteredIssues.map((issue) => (
-          <Card style={{ margin: "7px" }}>
-            <CardActionArea onClick={() => window.open(JiraURL(issue.integrationName) + /browse/ + issue.key)}>
-              <CardContent>
-                <Box sx={{ flexDirection: "row", display: "flex" }}>
-                  <Typography gutterBottom component="h2" style={{ alignSelf: "center", marginRight: "10px" }}>
-                    {issue.key}
-                  </Typography>
-                  <Box src={issue.priorityImage} component="img" maxHeight={50} left={"90px"} />
-                </Box>
-                <Typography variant="body2" color="textSecondary">
-                  {issue.summary}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        ))}
-      </Grid>
-    </Grid>
+    <>
+      {integrationValue && (
+        <>
+          <FormLabel id={uuidv4()}>Integration</FormLabel>
+          <RadioGroup
+            row
+            value={integrationValue}
+            onChange={(e) => {
+              setCheckedProjects([]);
+              setCheckedStatuses([]);
+              setCheckedOthers([]);
+              setIntegrationValue((e.target as HTMLInputElement).value);
+            }}>
+            {integrations.map((inte, i) => {
+              let value = `${inte.type}/${inte.name}`;
+              return <FormControlLabel value={value} control={<Radio />} label={value} />;
+            })}
+          </RadioGroup>
+          <Grid container spacing={5}>
+            <Grid item xs={3}>
+              <ProjectExpandForFilter
+                checkedProjects={checkedProjects}
+                setCheckedProjects={setCheckedProjects}
+                integration={integrationValue}
+              />
+              <StatusExpandForFilter
+                checkedStatuses={checkedStatuses}
+                setCheckedStatuses={setCheckedStatuses}
+                integration={integrationValue}
+              />
+              <OtherExpandForFilter checkedOthers={checkedOthers} setCheckedOther={setCheckedOthers} />
+            </Grid>
+            <Grid item xs={9}>
+              {filteredIssues.map((issue) => (
+                <Card style={{ margin: '7px' }}>
+                  <CardActionArea
+                    onClick={() => {
+                      issue.type === 'Jira' && window.open(JiraURL(issue.integrationName) + /browse/ + issue.key);
+                      issue.type === 'ClickUp' && window.open(ClickUpUrl() + /t/ + issue.issueId);
+                    }}>
+                    <CardContent>
+                      <Box sx={{ flexDirection: 'row', display: 'flex' }}>
+                        <Typography gutterBottom component="h2" style={{ alignSelf: 'center', marginRight: '10px' }}>
+                          {issue.key}
+                        </Typography>
+                        <Box src={issue.priorityImage} component="img" maxHeight={50} left={'90px'} />
+                      </Box>
+                      <Typography variant="body2" color="textSecondary">
+                        {issue.summary}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              ))}
+            </Grid>
+          </Grid>
+        </>
+      )}
+    </>
   );
 };
 

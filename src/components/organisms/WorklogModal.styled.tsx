@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/styles";
 import { Box, Dialog, DialogTitle, DialogContent, Button, DialogActions, TextField, Stack } from "@mui/material";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IssuesReturnRoot";
+import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IsuesReturnRoot";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers";
