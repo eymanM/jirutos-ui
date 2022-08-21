@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -16,6 +17,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import OtherExpandForFilter from 'components/molecules/OtherExpandForFilter';
+import AddWorklogModalStyled from 'components/organisms/AddWorklogModal.styled';
 import { FilterIssues, UserIntegrations } from 'endpoint/endpointWorklogExecuter';
 import { IssueForFilterModel } from 'interfaces&Types/IssueForFilterModel';
 import { FilterDataModel } from 'interfaces&Types/issueReturnIfaces/FilterData';
@@ -29,6 +31,8 @@ const FilterView = () => {
   const [filteredIssues, setFilteredIssues] = React.useState<IssueForFilterModel[]>([]);
   const [integrations, setIntegrations] = React.useState<TypeName[]>([]);
   const [integrationValue, setIntegrationValue] = React.useState<string>();
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [startedTask, setStartedTask] = React.useState<IssueForFilterModel>();
 
   React.useEffect(() => {
     async function fetch() {
@@ -107,6 +111,16 @@ const FilterView = () => {
                           {issue.key}
                         </Typography>
                         <Box src={issue.priorityImage} component="img" maxHeight={50} left={'90px'} />
+                        <Button
+                          style={{ marginInline: 50 }}
+                          onClick={(e) => {
+                            setStartedTask(issue);
+                            e.stopPropagation();
+                            setModalOpen(true);
+                          }}
+                          variant="outlined">
+                          Add work log
+                        </Button>
                       </Box>
                       <Typography variant="body2" color="textSecondary">
                         {issue.summary}
@@ -116,6 +130,12 @@ const FilterView = () => {
                 </Card>
               ))}
             </Grid>
+            <AddWorklogModalStyled
+              open={modalOpen}
+              handleClose={() => setModalOpen(false)}
+              issue={startedTask!}
+              typeName={integrationValue}
+            />
           </Grid>
         </>
       )}

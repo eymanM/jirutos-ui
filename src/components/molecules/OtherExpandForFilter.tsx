@@ -1,8 +1,5 @@
 import React from 'react';
-import { ProjectModel } from 'interfaces&Types/ProjectModel';
-import { GetStatusesForProjects } from 'endpoint/endpointDictionaryExecuter';
 import ExpandableCheckedList from './ExpandableCheckedList';
-import { StatusModel } from 'interfaces&Types/StatusModel';
 
 type OtherExpandForFilterProps = {
   checkedOthers: string[];

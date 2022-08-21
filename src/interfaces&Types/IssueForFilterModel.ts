@@ -7,4 +7,5 @@ export type IssueForFilterModel = {
   priorityImage: string;
   type: string;
   integrationName: string;
+  customField: string;
 };

@@ -1,15 +1,14 @@
-import React from "react";
-import { styled } from "@mui/styles";
-import { Box, Dialog, DialogTitle, DialogContent, Button, DialogActions, TextField, Stack } from "@mui/material";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IsuesReturnRoot";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { UpdateWorklogModel } from "interfaces&Types/UpdateWorklogModel";
-import { UpdateWorklog } from "endpoint/endpointWorklogExecuter";
-import moment from "moment";
-import { useActions } from "hooks/useActions";
-import { useTypedSelector } from "hooks/useTypedSelector";
+import React from 'react';
+import { styled } from '@mui/styles';
+import { Box, Dialog, DialogTitle, DialogContent, Button, DialogActions, TextField, Stack } from '@mui/material';
+import { WorklogForIssueDto } from 'interfaces&Types/issueReturnIfaces/IsuesReturnRoot';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { UpdateWorklogModel } from 'interfaces&Types/UpdateWorklogModel';
+import { UpdateWorklog } from 'endpoint/endpointWorklogExecuter';
+import { useActions } from 'hooks/useActions';
+import { useTypedSelector } from 'hooks/useTypedSelector'; //not delete
 
 const StyledWorklogModal = styled(Box)({});
 
@@ -45,12 +44,12 @@ const WorklogModalContent: React.FC<WorklogContentProps> = ({ open, handleClose,
 
   return (
     <StyledWorklogModal>
-      <Dialog open={open} onClose={handleClose} style={{ minWidth: "500px" }} fullWidth>
-        <DialogTitle>{"Time tracking"}</DialogTitle>
+      <Dialog open={open} onClose={handleClose} style={{ minWidth: '500px' }} fullWidth>
+        <DialogTitle>{'Time tracking'}</DialogTitle>
         <DialogContent dividers>
           <Stack spacing={2}>
             <TextField
-              style={{ marginBlock: "20px" }}
+              style={{ marginBlock: '20px' }}
               id="outlined-basic"
               label="Time spent"
               variant="outlined"

@@ -1,11 +1,13 @@
-import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import Dashboard from "views/Dashboard/Dashboard";
-import SignIn from "views/SignIn";
-import CalendarView from "views/CalendarView";
-import FilterView from "views/Dashboard/Filters";
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Dashboard from 'views/Dashboard/Dashboard';
+import SignIn from 'views/SignIn';
+import CalendarView from 'views/CalendarView';
+import FilterView from 'views/Dashboard/Filters';
+import { APP_NAME } from 'state/constans/constans';
 
 function App() {
+  document.title = APP_NAME;
   return (
     <Routes>
       <Route path="/SignIn" element={<SignIn />} />

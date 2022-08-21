@@ -1,38 +1,40 @@
-import { ActionType } from "state/action-types";
+import { ActionType } from 'state/action-types';
 
 interface AddTaskAction {
-  type: ActionType.ADD_TASK
+  type: ActionType.ADD_TASK;
   payload: {
-    id: string
-    timeToAdd: string
-  }
+    id: string;
+    timeToAdd: string;
+  };
 }
 
 interface DeleteTaskAction {
-  type: ActionType.DELETE_TASK
+  type: ActionType.DELETE_TASK;
   payload: {
-    id: string
-  }
+    id: string;
+  };
 }
 
 interface UpdateTaskAction {
-  type: ActionType.UPDATE_TASK
+  type: ActionType.UPDATE_TASK;
   payload: {
-    id: string
-    timeToSet: string
-  }
+    id: string;
+    timeToSet: string;
+  };
 }
 
 interface ShowModalWorklog {
-  type: ActionType.SHOW_MODAL_WORKLOG
+  type: ActionType.SHOW_MODAL_WORKLOG;
   payload: {
-    show: boolean
-  }
+    show: boolean;
+  };
 }
 
+interface UpdateStopwatchTime {
+  type: ActionType.UPDATE_STOPWATCH_TIME;
+  payload: {
+    time: number;
+  };
+}
 
-export type Action = 
- | AddTaskAction
- | DeleteTaskAction 
- | UpdateTaskAction
- | ShowModalWorklog
+export type Action = AddTaskAction | DeleteTaskAction | UpdateTaskAction | ShowModalWorklog | UpdateStopwatchTime;

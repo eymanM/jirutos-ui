@@ -1,7 +1,7 @@
-import { ActionType } from "state/action-types";
-import { Action } from "state/actions";
+import { ActionType } from 'state/action-types';
+import { Action } from 'state/actions';
 
-import { Dispatch } from "redux";
+import { Dispatch } from 'redux';
 
 export const addTask = (id: string, timeToAdd: string) => {
   return {
@@ -38,6 +38,17 @@ export const setCalendarRerender = (show: boolean) => {
       type: ActionType.SHOW_MODAL_WORKLOG,
       payload: {
         show: show,
+      },
+    });
+  };
+};
+
+export const updateStopwatch = (time: number) => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.UPDATE_STOPWATCH_TIME,
+      payload: {
+        time: time,
       },
     });
   };

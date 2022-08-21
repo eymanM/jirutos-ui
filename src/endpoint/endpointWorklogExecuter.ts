@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AddWorklogModel } from 'interfaces&Types/AddWorklogModel';
 import { IssueForFilterModel } from 'interfaces&Types/IssueForFilterModel';
 import { FilterDataModel } from 'interfaces&Types/issueReturnIfaces/FilterData';
 import { WorklogForIssueDto } from 'interfaces&Types/issueReturnIfaces/IsuesReturnRoot';
@@ -45,5 +46,13 @@ export const UserIntegrations = async (email: string): Promise<TypeName[]> => {
   } catch (err) {
     console.log(err);
     return [];
+  }
+};
+
+export const AddWorklog = async (typeAndName: string, model: AddWorklogModel): Promise<void> => {
+  try {
+    await axios.post<AddWorklogModel>(`${URL}/Issues/AddWorklog/${typeAndName}`, { ...model });
+  } catch (err) {
+    console.log(err);
   }
 };
