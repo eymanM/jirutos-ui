@@ -2,7 +2,7 @@ import React from 'react';
 import DrawerStyled from 'components/molecules/Drawer.styled';
 import { Toolbar, ListItem, ListItemIcon, ListItemText, Divider, IconButton } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { FilterAlt, Watch } from '@mui/icons-material';
+import { FilterAlt, Assessment } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
 
@@ -36,6 +36,14 @@ const Drawer: React.FC<any> = ({ open, toggleDrawer }) => {
               <FilterAlt />
             </ListItemIcon>
             <ListItemText primary="Filters" />
+          </ListItem>
+        </Link>
+        <Link to="/Report" style={{ textDecoration: 'none', color: 'black' }}>
+          <ListItem button>
+            <ListItemIcon>
+              <Assessment />
+            </ListItemIcon>
+            <ListItemText primary="Reports" />
           </ListItem>
         </Link>
       </>

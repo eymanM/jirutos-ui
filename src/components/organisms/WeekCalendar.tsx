@@ -1,13 +1,13 @@
-import React from "react";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@mui/material";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ButtonIcon from "components/atoms/ButtonIcon";
-import { WeekDays } from "state/constans/constans";
-import { WorklogForIssueDto } from "interfaces&Types/issueReturnIfaces/IsuesReturnRoot";
-import Stack from "components/molecules/Stack.styled";
-import moment from "moment";
-import { v4 as uiudv4 } from "uuid";
+import React from 'react';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ButtonIcon from 'components/atoms/ButtonIcon';
+import { WeekDays } from 'state/constans/constans';
+import { WorklogForIssueDto } from 'interfaces&Types/issueReturnIfaces/IsuesReturnRoot';
+import Stack from 'components/molecules/Stack.styled';
+import moment from 'moment';
+import { v4 as uiudv4 } from 'uuid';
 
 type WeekCalendarProps = {
   worklogs: WorklogForIssueDto[];
@@ -24,7 +24,7 @@ const WeekCalendar: React.FC<WeekCalendarProps> = ({ worklogs, startDate, setSta
         <TableHead>
           <TableRow>
             {WeekDays.map((day, index) => {
-              dateHead.add("1", "days");
+              dateHead.add('1', 'days');
 
               return (
                 <TableCell key={uiudv4()} align="center">
@@ -38,7 +38,7 @@ const WeekCalendar: React.FC<WeekCalendarProps> = ({ worklogs, startDate, setSta
         <TableBody>
           <TableRow>
             {WeekDays.map((day, index) => {
-              dateBody.add("1", "days");
+              dateBody.add('1', 'days');
 
               return (
                 <TableCell key={uiudv4()} size="small">
@@ -52,25 +52,23 @@ const WeekCalendar: React.FC<WeekCalendarProps> = ({ worklogs, startDate, setSta
           </TableRow>
         </TableBody>
 
-        <TableFooter style={{ display: "flex", justifyContent: "center" }}>
+        <TableFooter style={{ display: 'flex', justifyContent: 'center' }}>
           <TableRow>
             <TableCell>
               <ButtonIcon
                 onClick={() => {
-                  startDate.add("-7", "days");
+                  startDate.add('-7', 'days');
                   setStartDate(moment(startDate.toDate()));
-                }}
-              >
+                }}>
                 <ArrowBackIosIcon color="action" />
               </ButtonIcon>
             </TableCell>
             <TableCell>
               <ButtonIcon
                 onClick={() => {
-                  startDate.add("7", "days");
+                  startDate.add('7', 'days');
                   setStartDate(moment(startDate.toDate()));
-                }}
-              >
+                }}>
                 <ArrowForwardIosIcon color="action" />
               </ButtonIcon>
             </TableCell>

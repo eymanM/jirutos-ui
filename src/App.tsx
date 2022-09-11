@@ -5,6 +5,7 @@ import SignIn from 'views/SignIn';
 import CalendarView from 'views/CalendarView';
 import FilterView from 'views/Dashboard/Filters';
 import { APP_NAME } from 'state/constans/constans';
+import ReportView from 'views/ReportView';
 
 function App() {
   document.title = APP_NAME;
@@ -15,6 +16,7 @@ function App() {
       <Route path="/" element={<Dashboard />}>
         <Route path="/Calendar" element={<CalendarView />} />
         <Route path="/Filter" element={<FilterView />} />
+        <Route path="/Report" element={<ReportView />} />
       </Route>
     </Routes>
   );

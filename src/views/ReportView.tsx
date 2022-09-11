@@ -1,14 +1,23 @@
 import React from 'react';
-import { Box, Button, Card, CardContent, Grid, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import moment from 'moment';
+import { Box, Button } from '@mui/material';
+import { GetIssuesBasicReport, GetProjectsBasicReport } from 'endpoint/endpointReportExecuter';
 
 const ReportView: React.FC<any> = (props) => {
-  const [time, setTime] = React.useState(0);
+  const [startDate, setStartDate] = React.useState<moment.Moment>(moment().startOf('isoWeek'));
+  React.useEffect(() => {}, []);
 
-  React.useEffect(() => {
-    async function fetchData() {}
-    fetchData();
-  }, [project]);
+  return (
+    <>
+      <Button style={{ marginInline: 50 }} onClick={() => GetProjectsBasicReport()} variant="outlined">
+        Get projects report
+      </Button>
 
-  return <Grid container spacing={0}></Grid>;
+      <Button style={{ marginInline: 50 }} onClick={() => GetIssuesBasicReport()} variant="outlined">
+        Get issues report
+      </Button>
+    </>
+  );
 };
+
 export default ReportView;
