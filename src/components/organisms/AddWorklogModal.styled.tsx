@@ -1,45 +1,67 @@
 import React from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  TextField,
+} from '@mui/material';
 import { styled } from '@mui/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { AddWorklog } from 'endpoint/endpointWorklogExecuter';
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import { IssueForFilterModel } from 'interfaces&Types/IssueForFilterModel';
-import { SpanStrFromMs } from 'endpoint/endpointUtlisExecuter';
+import { AddWorklog, IsIssueExist } from 'endpoint/endpointWorklogExecuter';
+import { StopwatchItemProps } from 'interfaces&Types/StopwatchItemProps';
 
 const StyledAddWorklogModal = styled(Box)({});
 
 type AddWorklogModalProps = {
   open: boolean;
   handleClose: () => void;
-  issue: IssueForFilterModel;
+  issueId: string;
+  customField?: string;
   typeName: string;
+  setStopwatchItems?: React.Dispatch<React.SetStateAction<StopwatchItemProps[]>>;
 };
 
-const AddWorklogModalStyled: React.FC<AddWorklogModalProps> = ({ open, handleClose, issue, typeName }) => {
+const AddWorklogModalStyled: React.FC<AddWorklogModalProps> = ({
+  open,
+  handleClose,
+  issueId,
+  customField,
+  typeName,
+  setStopwatchItems,
+}) => {
   const [dateStarted, setDateStarted] = React.useState(new Date());
-  const { stopwatchSeconds } = useTypedSelector((state) => state.tasks);
   const [timeSpent, setTimeSpent] = React.useState(`1m`);
+  const [displayAlert, setDisplayAlert] = React.useState({ show: false, message: '' });
 
-  const handleSave = () => {
-    AddWorklog(typeName, {
-      id: issue.issueId,
+  const handleSave = async () => {
+    const isIssueExist = await IsIssueExist(typeName, issueId);
+
+    if (!isIssueExist.exist) {
+      setDisplayAlert({ show: true, message: 'No such issue - ' + issueId });
+      handleClose();
+      return;
+    }
+    await AddWorklog(typeName, {
+      id: issueId,
       timeSpend: timeSpent,
       startedUnix: dateStarted.getTime(),
-      customField: issue.customField,
+      customField: customField,
     });
+    if (setStopwatchItems)
+      setStopwatchItems((prev) => {
+        const filteredItems = prev.filter((x) => x.taskId !== issueId);
+        return filteredItems;
+      });
     handleClose();
   };
-
-  React.useEffect(() => {
-    if (stopwatchSeconds % 60000 !== 0) return;
-    async function fetchData() {
-      setTimeSpent(await SpanStrFromMs(stopwatchSeconds));
-    }
-    fetchData();
-  }, [stopwatchSeconds]);
 
   return (
     <StyledAddWorklogModal>
@@ -76,6 +98,15 @@ const AddWorklogModalStyled: React.FC<AddWorklogModalProps> = ({ open, handleClo
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
+      {displayAlert.show && (
+        <Alert
+          variant="filled"
+          sx={{ position: 'fixed', bottom: '2%', right: '2%' }}
+          onClose={() => setDisplayAlert({ show: false, message: '' })}
+          severity="warning">
+          {displayAlert.message}
+        </Alert>
+      )}
     </StyledAddWorklogModal>
   );
 };

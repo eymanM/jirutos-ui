@@ -19,9 +19,9 @@ const AppBar: React.FC<any> = ({ open, toggleDrawer }) => {
         <Typography component="h1" variant="h5" color="inherit" noWrap sx={{ flexGrow: 1, marginLeft: '5%' }}>
           {APP_NAME}
         </Typography>
-        <Typography noWrap>
+        {/* <Typography noWrap>
           <Stopwatch />
-        </Typography>
+        </Typography> */}
       </Toolbar>
     </AppBarStyled>
   );

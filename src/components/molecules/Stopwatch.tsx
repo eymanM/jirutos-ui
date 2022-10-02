@@ -3,20 +3,17 @@ import { Box, Button, TextField } from '@mui/material';
 import moment from 'moment';
 import React from 'react';
 import { APP_NAME } from 'state/constans/constans';
-import { useTypedSelector } from 'hooks/useTypedSelector';
-import { useActions } from 'hooks/useActions';
-// type StopwatchProps = {
-//   taskID: string;
-//   setStopwatchEnabled: React.Dispatch<React.SetStateAction<boolean>>;
-//   start: boolean;
-//   setStart: React.Dispatch<React.SetStateAction<boolean>>;
-// };
 
-const Stopwatch: React.FC<any> = () => {
-  const [time, setTime] = React.useState(0);
+type StopwatchProps = {
+  time: number;
+  setTime: React.Dispatch<React.SetStateAction<number>>;
+  startState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+};
+
+const Stopwatch: React.FC<StopwatchProps> = ({ time, setTime, startState }) => {
   const [formattedTimeValue, setFormattedTimeValue] = React.useState('0:00:00');
-  const [start, setStart] = React.useState(false);
-  const { updateStopwatch } = useActions();
+  const [start, setStart] = startState;
+
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
     if (start) {
@@ -25,9 +22,8 @@ const Stopwatch: React.FC<any> = () => {
       }, 1000);
       setFormattedTimeValue(moment(time).add(-1, 'hour').format('H:mm:ss'));
       document.title = formattedTimeValue;
-      updateStopwatch(time);
     } else {
-      clearInterval(interval!);
+      //clearInterval(interval!);
       document.title = APP_NAME;
     }
 
@@ -37,9 +33,14 @@ const Stopwatch: React.FC<any> = () => {
     };
   });
 
+  React.useEffect(() => {
+    if (!time) return;
+    setFormattedTimeValue(moment(time).add(-1, 'hour').format('H:mm:ss'));
+  }, []);
+
   return (
     <Box sx={{ flexDirection: 'row', display: 'flex' }}>
-      <TextField value={formattedTimeValue} sx={{ maxWidth: 120, backgroundColor: '#1e88e5' }} />
+      <TextField value={formattedTimeValue} sx={{ maxWidth: 120 }} />
       <Button
         variant="contained"
         color="secondary"

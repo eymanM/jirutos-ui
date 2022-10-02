@@ -37,4 +37,17 @@ interface UpdateStopwatchTime {
   };
 }
 
-export type Action = AddTaskAction | DeleteTaskAction | UpdateTaskAction | ShowModalWorklog | UpdateStopwatchTime;
+interface RerenderStopwatchItems {
+  type: ActionType.RERENDER_STOPWATCH_ITEMS;
+  payload: {
+    rerender: boolean;
+  };
+}
+
+export type Action =
+  | AddTaskAction
+  | DeleteTaskAction
+  | UpdateTaskAction
+  | ShowModalWorklog
+  | UpdateStopwatchTime
+  | RerenderStopwatchItems;

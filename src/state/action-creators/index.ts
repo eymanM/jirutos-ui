@@ -53,3 +53,14 @@ export const updateStopwatch = (time: number) => {
     });
   };
 };
+
+export const rerenderStopwatchItems = (rerender: boolean) => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.RERENDER_STOPWATCH_ITEMS,
+      payload: {
+        rerender: rerender,
+      },
+    });
+  };
+};

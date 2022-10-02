@@ -2,7 +2,7 @@ import React from 'react';
 import DrawerStyled from 'components/molecules/Drawer.styled';
 import { Toolbar, ListItem, ListItemIcon, ListItemText, Divider, IconButton } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { FilterAlt, Assessment } from '@mui/icons-material';
+import { FilterAlt, Assessment, AccessTime, AssignmentInd } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
 
@@ -45,6 +45,21 @@ const Drawer: React.FC<any> = ({ open, toggleDrawer }) => {
             </ListItemIcon>
             <ListItemText primary="Reports" />
           </ListItem>
+        </Link>
+        <Link to="/Stopwatch" style={{ textDecoration: 'none', color: 'black' }}>
+          <ListItem button>
+            <ListItemIcon>
+              <AccessTime />
+            </ListItemIcon>
+            <ListItemText primary="Stopwatch" />
+          </ListItem>
+        </Link>
+        <Link
+          to="/Sign/in"
+          style={{ color: 'black', alignSelf: 'center', bottom: 30, position: 'absolute' }}
+          onClick={() => localStorage.removeItem('tokens')}>
+          <AssignmentInd />
+          Log out
         </Link>
       </>
     </DrawerStyled>

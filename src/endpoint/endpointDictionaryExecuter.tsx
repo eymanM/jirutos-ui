@@ -1,14 +1,13 @@
-import { URL } from 'state/constans/constans';
-import axios from 'axios';
+import axios from './axiosInstance';
 import { ProjectModel } from 'interfaces&Types/ProjectModel';
 import { StatusModel } from 'interfaces&Types/StatusModel';
 
 export const GetProjectsForUser = async (typeAndName: string): Promise<ProjectModel[]> => {
   try {
-    const data = await axios.get<ProjectModel[]>(`${URL}/Dictionary/AvailableProjectsForUser/${typeAndName}`);
+    const data = await axios.get<ProjectModel[]>(`/Dictionary/AvailableProjectsForUser/${typeAndName}`);
 
     return data.data;
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
     return [];
   }
@@ -16,7 +15,7 @@ export const GetProjectsForUser = async (typeAndName: string): Promise<ProjectMo
 
 export const GetStatusesForProjects = async (typeAndName: string): Promise<StatusModel[]> => {
   try {
-    const data = await axios.get<StatusModel[]>(`${URL}/Dictionary/Statuses/${typeAndName}`);
+    const data = await axios.get<StatusModel[]>(`/Dictionary/Statuses/${typeAndName}`);
 
     return data.data;
   } catch (err) {

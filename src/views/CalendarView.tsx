@@ -15,9 +15,9 @@ const CalendarView: React.FC<any> = (props) => {
   const endDate = moment(startDate.toDate()).endOf('isoWeek');
   const { rerenderCalendar } = useTypedSelector((state) => state.tasks); //state for rerender calendar
 
-  // React.useEffect(() => {
-  //   WorklogDateRange(startDate, endDate).then((data) => setWorklogs(data));
-  // }, [startDate]);
+  React.useEffect(() => {
+    WorklogDateRange(startDate, endDate).then((data) => setWorklogs(data));
+  }, [startDate]);
 
   return (
     <>

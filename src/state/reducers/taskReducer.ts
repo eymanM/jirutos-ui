@@ -7,6 +7,7 @@ interface TaskState {
   error: string | null;
   order: string[];
   rerenderCalendar: boolean;
+  rerenderStopwatchItems: boolean;
   stopwatchSeconds: number;
   data: {
     [key: string]: IssueTaskTime;
@@ -18,6 +19,7 @@ const initialState: TaskState = {
   error: null,
   order: [],
   rerenderCalendar: false,
+  rerenderStopwatchItems: false,
   stopwatchSeconds: 0,
   data: {},
 };
@@ -25,9 +27,35 @@ const initialState: TaskState = {
 const reducer = (state: TaskState = initialState, action: Action): TaskState => {
   switch (action.type) {
     case ActionType.SHOW_MODAL_WORKLOG:
-      return { loading: false, error: null, order: [], rerenderCalendar: action.payload.show, data: {}, stopwatchSeconds: 0 };
+      return {
+        loading: false,
+        error: null,
+        order: [],
+        rerenderCalendar: action.payload.show,
+        rerenderStopwatchItems: false,
+        data: {},
+        stopwatchSeconds: 0,
+      };
     case ActionType.UPDATE_STOPWATCH_TIME:
-      return { loading: false, error: null, order: [], rerenderCalendar: false, data: {}, stopwatchSeconds: action.payload.time };
+      return {
+        loading: false,
+        error: null,
+        order: [],
+        rerenderCalendar: false,
+        rerenderStopwatchItems: false,
+        data: {},
+        stopwatchSeconds: action.payload.time,
+      };
+    case ActionType.RERENDER_STOPWATCH_ITEMS:
+      return {
+        loading: false,
+        error: null,
+        order: [],
+        rerenderCalendar: false,
+        rerenderStopwatchItems: action.payload.rerender,
+        data: {},
+        stopwatchSeconds: 0,
+      };
     default:
       return state;
   }

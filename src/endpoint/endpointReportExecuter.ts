@@ -1,9 +1,8 @@
-import { URL } from 'state/constans/constans';
-import axios from 'axios';
+import axios from './axiosInstance';
 
 export const GetProjectsBasicReport = async (): Promise<any> => {
   try {
-    const data = await axios.get<any>(`${URL}/Report/ProjectsBasicReport`);
+    const data = await axios.get<any>(`/Report/ProjectsBasicReport`);
 
     const type = data.headers['content-type'];
     const blob = new Blob([data.data], { type: type });
@@ -18,7 +17,7 @@ export const GetProjectsBasicReport = async (): Promise<any> => {
 
 export const GetIssuesBasicReport = async (): Promise<any> => {
   try {
-    const data = await axios.get<any>(`${URL}/Report/IssuesBasicReport`);
+    const data = await axios.get<any>(`/Report/IssuesBasicReport`);
 
     const type = data.headers['content-type'];
     const blob = new Blob([data.data], { type: type });

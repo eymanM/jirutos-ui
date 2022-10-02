@@ -133,7 +133,8 @@ const FilterView = () => {
             <AddWorklogModalStyled
               open={modalOpen}
               handleClose={() => setModalOpen(false)}
-              issue={startedTask!}
+              issueId={startedTask?.issueId || ''}
+              customField={startedTask?.customField || ''}
               typeName={integrationValue}
             />
           </Grid>
