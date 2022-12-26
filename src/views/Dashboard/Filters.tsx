@@ -36,7 +36,7 @@ const FilterView = () => {
 
   React.useEffect(() => {
     async function fetch() {
-      const res = await UserIntegrations('ironoth12@gmail.com');
+      const res = await UserIntegrations();
       setIntegrations(res);
       let value = `${res[0].type}/${res[0].name}`;
       setIntegrationValue(value);

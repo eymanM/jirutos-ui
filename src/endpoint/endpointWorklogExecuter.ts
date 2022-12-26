@@ -38,9 +38,9 @@ export const FilterIssues = async (typeAndName: string, filterData: FilterDataMo
   }
 };
 
-export const UserIntegrations = async (email: string): Promise<TypeName[]> => {
+export const UserIntegrations = async (): Promise<TypeName[]> => {
   try {
-    const data = await axios.get<string, { data: TypeName[] }>(`/User/Integrations/${email}`);
+    const data = await axios.get<string, { data: TypeName[] }>(`/User/Integrations`);
     return data.data;
   } catch (err) {
     console.log(err);

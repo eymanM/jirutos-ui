@@ -13,13 +13,22 @@ const StopwatchView = () => {
 
   React.useEffect(() => {
     async function fetch() {
-      const res = await UserIntegrations('ironoth12@gmail.com');
+      const res = await UserIntegrations();
       setIntegrations(res);
       let value = `${res[0].type}/${res[0].name}`;
       setIntegrationValue(value);
     }
     fetch();
+    if (localStorage.getItem('stopwatchItems') && JSON.parse(localStorage.getItem('stopwatchItems') || '[{}]')) {
+      setStopwatchItems(JSON.parse(localStorage.getItem('stopwatchItems') || '[{}]'));
+    }
   }, []);
+
+  React.useEffect(() => {
+    return () => {
+      stopwatchItems && localStorage.setItem('stopwatchItems', JSON.stringify(stopwatchItems));
+    };
+  }, [stopwatchItems]);
 
   return (
     <>
@@ -48,7 +57,7 @@ const StopwatchView = () => {
               />
             </Grid>
             <Grid item xs={5}>
-              {stopwatchItems.map(({ taskId, timeSpend }) => (
+              {stopwatchItems.map(({ taskId }) => (
                 <RenderStopwatchItem
                   key={taskId}
                   stopwatchItems={stopwatchItems}

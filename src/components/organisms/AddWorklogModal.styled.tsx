@@ -17,6 +17,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AddWorklog, IsIssueExist } from 'endpoint/endpointWorklogExecuter';
 import { StopwatchItemProps } from 'interfaces&Types/StopwatchItemProps';
+import { SpanStrFromMs } from 'endpoint/endpointUtlisExecuter';
 
 const StyledAddWorklogModal = styled(Box)({});
 
@@ -26,6 +27,7 @@ type AddWorklogModalProps = {
   issueId: string;
   customField?: string;
   typeName: string;
+  stopwatchItems?: StopwatchItemProps[];
   setStopwatchItems?: React.Dispatch<React.SetStateAction<StopwatchItemProps[]>>;
 };
 
@@ -35,11 +37,22 @@ const AddWorklogModalStyled: React.FC<AddWorklogModalProps> = ({
   issueId,
   customField,
   typeName,
+  stopwatchItems,
   setStopwatchItems,
 }) => {
   const [dateStarted, setDateStarted] = React.useState(new Date());
-  const [timeSpent, setTimeSpent] = React.useState(`1m`);
+  const [timeSpent, setTimeSpent] = React.useState('1m');
   const [displayAlert, setDisplayAlert] = React.useState({ show: false, message: '' });
+
+  React.useEffect(() => {
+    const timeSpendSec = stopwatchItems?.filter((x) => x.taskId === issueId)[0]?.timeSpend;
+    async function setTimeStr() {
+      const res = await SpanStrFromMs(timeSpendSec!);
+      setTimeSpent(res);
+    }
+
+    timeSpendSec && setTimeStr();
+  }, [issueId]);
 
   const handleSave = async () => {
     const isIssueExist = await IsIssueExist(typeName, issueId);
@@ -51,7 +64,7 @@ const AddWorklogModalStyled: React.FC<AddWorklogModalProps> = ({
     }
     await AddWorklog(typeName, {
       id: issueId,
-      timeSpend: timeSpent,
+      timeSpend: timeSpent.toString(),
       startedUnix: dateStarted.getTime(),
       customField: customField,
     });

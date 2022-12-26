@@ -81,6 +81,7 @@ const RenderStopwatchItem: React.FC<RenderStopwatchItemProps> = ({
         handleClose={() => setModalOpen(false)}
         issueId={taskIdLocal}
         typeName={typeName}
+        stopwatchItems={stopwatchItems}
         setStopwatchItems={setStopwatchItems}
         customField={typeName.substring(typeName.indexOf('/') + 1)}
       />
